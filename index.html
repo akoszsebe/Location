@@ -23,7 +23,7 @@
         
     
     window.onload = function(e){
-      var flickerAPI = "http://allamvizsga-akoszsebe.c9users.io/api/locations";
+      var flickerAPI = "http://mylocationapiservice.azurewebsites.net/api/locations";
       setInterval(function() {$.getJSON( flickerAPI, {
         format: "json"
       })
