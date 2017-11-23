@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 500px; height: 400px;"></div>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script type="text/javascript">
+    var locations = []
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 10,
+              center: new google.maps.LatLng(46.75, 23.59),
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        
+    var infowindow = new google.maps.InfoWindow();
+        
+    
+    window.onload = function(e){
+      var flickerAPI = "http://allamvizsga-akoszsebe.c9users.io/api/locations";
+      setInterval(function() {$.getJSON( flickerAPI, {
+        format: "json"
+      })
+        .done(function( data ) {
+         for (var i=0;i<data.length;i++) {
+            locations.push([data[i].details,data[i].latitude,data[i].longitude])
+         }
+            var marker, i;
+        
+            for (i = 0; i < locations.length; i++) {  
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                map: map
+              });
+        
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                  infowindow.setContent(locations[i][0]);
+                  infowindow.open(map, marker);
+                }
+              })(marker, i));
+            }
+         
+        });
+      }, 5000);
+    }
+
+
+   
+  </script>
+</body>
+</html>
