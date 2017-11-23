@@ -3,7 +3,7 @@
   "description": "SmartHome Backend",
   "version": "0.0.2",
   "engines": {
-    "node": "6.9.4",
+    "node": "8.9.0",
     "npm": "2.14.12"
   },
   "main": "index.js",
